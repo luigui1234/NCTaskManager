@@ -96,7 +96,7 @@ public class Task {
         }
 
         if(this.repeated == false) {
-            return this.time - current;
+            return this.time;
         }
 
         while ((this.getStartTime()+(taskRepetition*this.getRepeatInterval())
