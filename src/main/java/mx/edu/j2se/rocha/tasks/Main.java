@@ -28,6 +28,17 @@ public class Main {
 
 		System.out.println(repetitive.nextTimeAfter(26));
 		System.out.println(nonRepetitive.nextTimeAfter(10));
+
+
+		ArrayTaskList tasks = new ArrayTaskList();
+		Task nonRepetitive1 = new Task("loquesea", 18);
+
+		tasks.add(repetitive);
+		tasks.add(nonRepetitive);
+		tasks.add(nonRepetitive1);
+		System.out.println(tasks.size());
+		System.out.println(tasks.remove(repetitive));
+		System.out.println(tasks.size());
 	}
 	
 }
