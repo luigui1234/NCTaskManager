@@ -104,7 +104,7 @@ public class Task {
                 this.getRepeatInterval()) < this.getEndTime())) {
             taskRepetition++;
         }
-        System.out.println(taskRepetition);
+
         if (this.getStartTime()+(taskRepetition*
                 this.getRepeatInterval()) > this.getEndTime()) {
             return -1;

@@ -18,8 +18,7 @@ public class ArrayTaskList {
 
     public boolean remove (Task task) {
         List<Task> arrList = new ArrayList<Task>(Arrays.asList(this.taskList));
-        Task[] resl = {};
-        int i = 0;
+        int i;
         for (i = 0; i < this.taskList.length; i++) {
             if (taskList[i] == task) {
                 Task[] anotherArray = new Task[taskList.length - 1];
@@ -48,5 +47,24 @@ public class ArrayTaskList {
 
     public Task getTask(int index) {
         return this.taskList[index];
+    }
+
+    public Task[] incoming (int from, int to) {
+        System.out.println(this.taskList);
+        Task[] subtask = {};
+        List<Task> arrList
+                = new ArrayList<Task>(Arrays.asList(subtask));
+
+        for (int i = 0; i < this.taskList.length; i++) {
+            if (this.taskList[i].isActive()
+                    && this.taskList[i].nextTimeAfter(from)<=to
+                    && this.taskList[i].nextTimeAfter(from) != -1
+                    && (this.taskList[i].nextTimeAfter(from)-from) >= 0) {
+                System.out.println(this.taskList[i].getTitle());
+                arrList.add(taskList[i]);
+            }
+        }
+
+        return arrList.toArray(subtask);
     }
 }
