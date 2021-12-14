@@ -7,6 +7,10 @@ public class ArrayTaskList {
 
     public void add (Task task) {
 
+        if (task == null) {
+            throw new NullPointerException();
+        }
+
         List<Task> arrList
                 = new ArrayList<Task>(
                 Arrays.asList(this.taskList));
@@ -16,7 +20,12 @@ public class ArrayTaskList {
         this.taskList = arrList.toArray(taskList);
     }
 
-    public boolean remove (Task task) {
+    public boolean remove (Task task) throws NullPointerException {
+
+        if (task == null) {
+            throw new NullPointerException();
+        }
+
         List<Task> arrList = new ArrayList<Task>(Arrays.asList(this.taskList));
         int i;
         for (i = 0; i < this.taskList.length; i++) {
@@ -45,11 +54,25 @@ public class ArrayTaskList {
         return this.taskList.length;
     }
 
-    public Task getTask(int index) {
-        return this.taskList[index];
+    public Task getTask(int index) throws IndexOutOfBoundsException {
+        try {
+            return this.taskList[index];
+        }
+        catch (IndexOutOfBoundsException ex) {
+            throw ex;
+        }
     }
 
-    public Task[] incoming (int from, int to) {
+    public Task[] incoming (int from, int to) throws IllegalArgumentException {
+        if (from < 0 || to < 0) {
+            throw new IllegalArgumentException("Value must not be negative");
+        }
+
+        else if (to < from) {
+            throw new IllegalArgumentException("Second parameter should end " +
+                    "later than first one");
+        }
+
         System.out.println(this.taskList);
         Task[] subtask = {};
         List<Task> arrList
