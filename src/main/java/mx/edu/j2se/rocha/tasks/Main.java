@@ -70,7 +70,7 @@ public class Main {
 		taskSchedule.add(nonRepetitive4);
 		taskSchedule.add(repetitive4);
 
-		System.out.println(taskSchedule.incoming(260, 2).length);
+		System.out.println(taskSchedule.incoming(251, 260).length);
 	}
 	
 }

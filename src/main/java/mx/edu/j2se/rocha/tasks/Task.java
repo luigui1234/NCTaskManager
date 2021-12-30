@@ -37,7 +37,7 @@ public class Task {
                     "than start time");
         }
 
-        else if ((start-end)<interval) {
+        else if ((end - start)<interval) {
             throw new IllegalArgumentException("Interval should be smaller in" +
                     " order that task is repeated");
         }
@@ -128,7 +128,7 @@ public class Task {
                     "than start time");
         }
 
-        else if ((start-end)<interval) {
+        else if ((end-start)<interval) {
             throw new IllegalArgumentException("Interval should be smaller in" +
                     " order that task is repeated");
         }
@@ -157,18 +157,6 @@ public class Task {
             return -1;
         }
 
-        if(this.repeated == false) {
-            if (current>this.time) {
-                throw new IllegalArgumentException("Current time cannot be " +
-                        "greater than task time");
-            }
-            return this.time;
-        }
-
-        if (current>this.getEndTime()) {
-            throw new IllegalArgumentException("Current time cannot be " +
-                    "greater than task time");
-        }
 
         while ((this.getStartTime()+(taskRepetition*this.getRepeatInterval())
                 <current) && (this.getStartTime()+(taskRepetition*
@@ -176,10 +164,25 @@ public class Task {
             taskRepetition++;
         }
 
+
+
         if (this.getStartTime()+(taskRepetition*
                 this.getRepeatInterval()) > this.getEndTime()) {
             return -1;
         }
+
+        /*if(this.repeated == false) {
+            if (current>=this.time) {
+                throw new IllegalArgumentException("Current time cannot be " +
+                        "greater than task time");
+            }
+            return this.time;
+        }
+
+        if (current>=this.getEndTime()) {
+            throw new IllegalArgumentException("Current time cannot be " +
+                    "greater than task time");
+        }*/
 
         return this.getStartTime()+(taskRepetition*this.getRepeatInterval());
     }

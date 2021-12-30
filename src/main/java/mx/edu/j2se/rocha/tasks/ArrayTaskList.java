@@ -11,10 +11,7 @@ public class ArrayTaskList {
             throw new NullPointerException();
         }
 
-        List<Task> arrList
-                = new ArrayList<Task>(
-                Arrays.asList(this.taskList));
-
+        List<Task> arrList = new ArrayList<Task>(Arrays.asList(this.taskList));
         arrList.add(task);
 
         this.taskList = arrList.toArray(taskList);
@@ -27,10 +24,11 @@ public class ArrayTaskList {
         }
 
         List<Task> arrList = new ArrayList<Task>(Arrays.asList(this.taskList));
+        Task[] anotherArray = new Task[taskList.length - 1];
         int i;
         for (i = 0; i < this.taskList.length; i++) {
             if (taskList[i] == task) {
-                Task[] anotherArray = new Task[taskList.length - 1];
+
 
                 // Copy the elements from starting till index
                 // from original array to the other array

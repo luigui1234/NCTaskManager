@@ -1,6 +1,7 @@
 package mx.edu.j2se.rocha.tasks.tests;
 
 import mx.edu.j2se.rocha.tasks.ArrayTaskList;
+import mx.edu.j2se.rocha.tasks.LinkedTaskList;
 import mx.edu.j2se.rocha.tasks.Task;
 import org.junit.Assert;
 import org.junit.Test;
@@ -98,4 +99,50 @@ public class Tests {
         Assert.assertEquals(taskSchedule.incoming(201, 250).length, 2);
     }
 
+    @Test
+    public void LinkedTaskList() {
+        LinkedTaskList taskSchedule = new LinkedTaskList();
+
+        Task nonRepetitive1_5 = new Task("desayuno", 18);
+        Task repetitive1 = new Task("desayuno diario", 2, 220, 24);
+        Task nonRepetitive2 = new Task("comida", 58);
+        Task repetitive2 = new Task("comida diario", 12, 200, 24);
+        Task nonRepetitive3 = new Task("cena", 67);
+        Task repetitive3 = new Task("cena diario", 78, 250, 12);
+        Task nonRepetitive4 = new Task("medicina", 120);
+        Task repetitive4 = new Task("medicina diario", 2, 58, 6);
+
+        nonRepetitive1_5.setActive(true);
+        repetitive1.setActive(true);
+        nonRepetitive2.setActive(true);
+        repetitive2.setActive(true);
+        nonRepetitive3.setActive(true);
+        repetitive3.setActive(true);
+        nonRepetitive4.setActive(true);
+        repetitive4.setActive(true);
+
+        taskSchedule.add(nonRepetitive1_5);
+        taskSchedule.add(repetitive1);
+        taskSchedule.add(nonRepetitive2);
+        taskSchedule.add(repetitive2);
+        taskSchedule.add(nonRepetitive1_5);
+
+        Assert.assertEquals(taskSchedule.size(), 5);
+        Assert.assertTrue(taskSchedule.remove(nonRepetitive1_5));
+        taskSchedule.remove(nonRepetitive1_5);
+        Assert.assertEquals(taskSchedule.size(), 3);
+
+        taskSchedule.add(nonRepetitive3);
+        taskSchedule.add(repetitive3);
+        taskSchedule.add(nonRepetitive4);
+        taskSchedule.add(repetitive4);
+
+        Assert.assertEquals(taskSchedule.getTask(0), repetitive1);
+        Assert.assertEquals(taskSchedule.getTask(2), repetitive2);
+
+        Assert.assertEquals(taskSchedule.incoming(2, 18).size(), 3);
+        Assert.assertEquals(taskSchedule.incoming(251, 260).size(), 0);
+        Assert.assertEquals(taskSchedule.incoming(3, 18).size(), 2);
+        Assert.assertEquals(taskSchedule.incoming(201, 250).size(), 2);
+    }
 }
