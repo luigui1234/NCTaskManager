@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList <LinkedList> {
     private LinkedList<Task> taskList = new LinkedList<>();
 
     public void add (Task task) {
@@ -48,7 +48,8 @@ public class LinkedTaskList {
         }
     }
 
-    public LinkedList<Task> incoming (int from, int to) throws IllegalArgumentException {
+    public LinkedList<Task> incoming (int from, int to)
+            throws IllegalArgumentException {
         if (from < 0 || to < 0) {
             throw new IllegalArgumentException("Value must not be negative");
         }

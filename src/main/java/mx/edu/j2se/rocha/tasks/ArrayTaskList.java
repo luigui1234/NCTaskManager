@@ -2,7 +2,7 @@ package mx.edu.j2se.rocha.tasks;
 
 import java.util.*;
 
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList <Task []>{
     private Task[] taskList = {};
 
     public void add (Task task) {
@@ -60,6 +60,7 @@ public class ArrayTaskList {
             throw ex;
         }
     }
+
 
     public Task[] incoming (int from, int to) throws IllegalArgumentException {
         if (from < 0 || to < 0) {
