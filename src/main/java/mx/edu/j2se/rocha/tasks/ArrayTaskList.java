@@ -2,7 +2,7 @@ package mx.edu.j2se.rocha.tasks;
 
 import java.util.*;
 
-public class ArrayTaskList extends AbstractTaskList <Task []>{
+public class ArrayTaskList extends AbstractTaskList <Task []> {
     private Task[] taskList = {};
 
     public void add (Task task) {
@@ -11,10 +11,9 @@ public class ArrayTaskList extends AbstractTaskList <Task []>{
             throw new NullPointerException();
         }
 
-        List<Task> arrList = new ArrayList<Task>(Arrays.asList(this.taskList));
-        arrList.add(task);
+        super.taskList.add(task);
 
-        this.taskList = arrList.toArray(taskList);
+        this.taskList = super.taskList.toArray(taskList);
     }
 
     public boolean remove (Task task) throws NullPointerException {
@@ -26,25 +25,21 @@ public class ArrayTaskList extends AbstractTaskList <Task []>{
         List<Task> arrList = new ArrayList<Task>(Arrays.asList(this.taskList));
         Task[] anotherArray = new Task[taskList.length - 1];
         int i;
+        int aux = 0;
         for (i = 0; i < this.taskList.length; i++) {
             if (taskList[i] == task) {
-
-
-                // Copy the elements from starting till index
-                // from original array to the other array
-                System.arraycopy(taskList, 0, anotherArray, 0, i);
-
-                // Copy the elements from index + 1 till end
-                // from original array to the other array
-                System.arraycopy(taskList, i + 1,
-                        anotherArray, i,
-                        taskList.length - i - 1);
-                taskList = anotherArray;
-
-                return true;
+                super.taskList.remove(task);
+                taskList = super.taskList.toArray(anotherArray);
+                anotherArray = new Task[taskList.length - 1];
+                aux++;
             }
         }
-        return false;
+        if (aux == 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
 
     }
 
@@ -88,5 +83,44 @@ public class ArrayTaskList extends AbstractTaskList <Task []>{
         }
 
         return arrList.toArray(subtask);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayTaskList that = (ArrayTaskList) o;
+        int aux=0;
+        if (taskList.length == that.taskList.length) {
+            for(int i = 0; i<taskList.length; i++) {
+                if (taskList[i].equals(that.taskList[i])) {
+                    aux++;
+                }
+            }
+        }
+        else {
+            return false;
+        }
+
+        if (aux==0) {
+            return false;
+        }
+        else return true;
+    }
+
+    Task[] cloneList () {
+        return taskList;
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(taskList);
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayTaskList{" +
+                "taskList=" + Arrays.toString(taskList) +
+                '}';
     }
 }

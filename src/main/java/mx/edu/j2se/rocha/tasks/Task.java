@@ -1,5 +1,7 @@
 package mx.edu.j2se.rocha.tasks;
 
+import java.util.Objects;
+
 public class Task {
     private String title;
     private boolean active;
@@ -185,5 +187,18 @@ public class Task {
         }*/
 
         return this.getStartTime()+(taskRepetition*this.getRepeatInterval());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return active == task.active && time == task.time && start == task.start && end == task.end && interval == task.interval && repeated == task.repeated && title.equals(task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, active, time, start, end, interval, repeated);
     }
 }

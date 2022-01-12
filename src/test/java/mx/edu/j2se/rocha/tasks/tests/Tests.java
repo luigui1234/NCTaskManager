@@ -4,6 +4,7 @@ import mx.edu.j2se.rocha.tasks.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Tests {
@@ -128,15 +129,19 @@ public class Tests {
         taskSchedule.add(repetitive2);
         taskSchedule.add(nonRepetitive1_5);
 
+
         Assert.assertEquals(taskSchedule.size(), 5);
         Assert.assertTrue(taskSchedule.remove(nonRepetitive1_5));
         taskSchedule.remove(nonRepetitive1_5);
         Assert.assertEquals(taskSchedule.size(), 3);
 
+        System.out.println(taskSchedule.size());
         taskSchedule.add(nonRepetitive3);
         taskSchedule.add(repetitive3);
         taskSchedule.add(nonRepetitive4);
         taskSchedule.add(repetitive4);
+
+        System.out.println(taskSchedule.size());
 
         Assert.assertEquals(taskSchedule.getTask(0), repetitive1);
         Assert.assertEquals(taskSchedule.getTask(2), repetitive2);
@@ -151,11 +156,6 @@ public class Tests {
     public void AbstractFactory() {
 
         TaskListFactory listFactory = new TaskListFactory();
-        ListTypes typesInstance = new ListTypes();
-
-        ListTypes.types typesOfList = ListTypes.types.LINKED;
-
-
 
         ArrayTaskList array = (ArrayTaskList)
                 listFactory.createTaskList(ListTypes.types.ARRAY);
@@ -220,7 +220,6 @@ public class Tests {
         taskSchedule.add(nonRepetitive1_5);
 
         Assert.assertEquals(taskSchedule.size(), 5);
-        Assert.assertTrue(taskSchedule.remove(nonRepetitive1_5));
         taskSchedule.remove(nonRepetitive1_5);
         Assert.assertEquals(taskSchedule.size(), 3);
 
@@ -236,5 +235,127 @@ public class Tests {
         Assert.assertEquals(taskSchedule.incoming(251, 260).size(), 0);
         Assert.assertEquals(taskSchedule.incoming(3, 18).size(), 2);
         Assert.assertEquals(taskSchedule.incoming(201, 250).size(), 2);
+    }
+
+    @Test
+    public void IteratorsServiceMethods() {
+        TaskListFactory listFactory = new TaskListFactory();
+
+        ArrayTaskList array = (ArrayTaskList)
+                listFactory.createTaskList(ListTypes.types.ARRAY);
+
+        ArrayTaskList arrayCpy = (ArrayTaskList)
+                listFactory.createTaskList(ListTypes.types.ARRAY);
+
+        Task nonRepetitive1_5 = new Task("desayuno", 18);
+        Task repetitive1 = new Task("desayuno diario", 2, 220, 24);
+        Task nonRepetitive2 = new Task("comida", 58);
+        Task repetitive2 = new Task("comida diario", 12, 200, 24);
+        Task nonRepetitive3 = new Task("cena", 67);
+        Task repetitive3 = new Task("cena diario", 78, 250, 12);
+        Task nonRepetitive4 = new Task("medicina", 120);
+        Task repetitive4 = new Task("medicina diario", 2, 58, 6);
+
+        Task nonRepetitive1_5Cpy = new Task("desayuno", 18);
+        Task repetitive1Cpy = new Task("desayuno diario", 2, 220, 24);
+
+        Assert.assertTrue(nonRepetitive1_5.equals(nonRepetitive1_5Cpy));
+        Assert.assertFalse(nonRepetitive1_5.equals(nonRepetitive2));
+
+        Assert.assertTrue(repetitive1.equals(repetitive1Cpy));
+        Assert.assertFalse(repetitive1.equals(repetitive2));
+
+        nonRepetitive1_5.setActive(true);
+        repetitive1.setActive(true);
+        nonRepetitive2.setActive(true);
+        repetitive2.setActive(true);
+        nonRepetitive3.setActive(true);
+        repetitive3.setActive(true);
+        nonRepetitive4.setActive(true);
+        repetitive4.setActive(true);
+
+        array.add(nonRepetitive1_5);
+        array.add(repetitive1);
+        array.add(nonRepetitive2);
+        array.add(repetitive2);
+        array.add(nonRepetitive3);
+        array.add(repetitive3);
+        array.add(nonRepetitive4);
+        array.add(repetitive4);
+
+        arrayCpy.add(nonRepetitive1_5);
+        arrayCpy.add(repetitive1);
+        arrayCpy.add(nonRepetitive2);
+        arrayCpy.add(repetitive2);
+        arrayCpy.add(nonRepetitive3);
+        arrayCpy.add(repetitive3);
+        arrayCpy.add(nonRepetitive4);
+        arrayCpy.add(repetitive4);
+
+        Assert.assertTrue(array.equals(arrayCpy));
+        Assert.assertEquals(array.hashCode(), arrayCpy.hashCode());
+        arrayCpy.remove(nonRepetitive1_5);
+        Assert.assertFalse(array.equals(arrayCpy));
+        Assert.assertNotEquals(array.hashCode(), arrayCpy.hashCode());
+
+        System.out.println(array.toString());
+
+        int count = 0;
+
+
+        for(Iterator i = array.listIterator(); i.hasNext();) {
+            Task task = (Task) i.next();
+            //System.out.println(task.getTitle());
+            count++;
+        }
+
+        Assert.assertEquals(count, array.size());
+
+        LinkedTaskList taskSchedule = (LinkedTaskList)
+                listFactory.createTaskList(ListTypes.types.LINKED);
+
+        LinkedTaskList taskScheduleCpy = (LinkedTaskList)
+                listFactory.createTaskList(ListTypes.types.LINKED);
+
+        taskSchedule.add(nonRepetitive1_5);
+        taskSchedule.add(repetitive1);
+        taskSchedule.add(nonRepetitive2);
+        taskSchedule.add(repetitive2);
+        taskSchedule.add(nonRepetitive1_5);
+        taskSchedule.add(nonRepetitive3);
+        taskSchedule.add(repetitive3);
+        taskSchedule.add(nonRepetitive4);
+        taskSchedule.add(repetitive4);
+
+        taskScheduleCpy.add(nonRepetitive1_5);
+        taskScheduleCpy.add(repetitive1);
+        taskScheduleCpy.add(nonRepetitive2);
+        taskScheduleCpy.add(repetitive2);
+        taskScheduleCpy.add(nonRepetitive1_5);
+        taskScheduleCpy.add(nonRepetitive3);
+        taskScheduleCpy.add(repetitive3);
+        taskScheduleCpy.add(nonRepetitive4);
+        taskScheduleCpy.add(repetitive4);
+
+        Assert.assertTrue(taskSchedule.equals(taskScheduleCpy));
+        Assert.assertEquals(taskSchedule.hashCode(),
+                taskScheduleCpy.hashCode());
+        taskScheduleCpy.remove(nonRepetitive1_5);
+        Assert.assertFalse(taskSchedule.equals(taskScheduleCpy));
+        Assert.assertNotEquals(taskSchedule.hashCode(),
+                taskScheduleCpy.hashCode());
+
+        System.out.println(taskSchedule.toString());
+
+        count = 0;
+
+
+        for(Iterator i = taskSchedule.listIterator(); i.hasNext();) {
+            Task task = (Task) i.next();
+            //System.out.println(task.getTitle());
+            count++;
+        }
+
+        Assert.assertEquals(count, taskSchedule.size());
     }
 }

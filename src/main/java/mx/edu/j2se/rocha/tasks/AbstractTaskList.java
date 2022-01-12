@@ -1,10 +1,12 @@
 package mx.edu.j2se.rocha.tasks;
 
 import java.util.AbstractList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 abstract class AbstractTaskList <T> {
-    private AbstractList<Task> taskList = new LinkedList<>();
+    public AbstractList<Task> taskList = new LinkedList<>();
+    Iterator i = taskList.iterator();
 
     abstract void add (Task task);
 
@@ -24,22 +26,33 @@ abstract class AbstractTaskList <T> {
                     "later than first one");
         }
 
-        System.out.println(this.taskList);
         AbstractList<Task> absList = new LinkedList<>();
+        System.out.println(this.taskList);
+        Task aux = (Task) i.next();
 
-        for (int i = 0; i < this.taskList.size(); i++) {
-            if (this.taskList.get(i).isActive()
-                    && this.taskList.get(i).nextTimeAfter(from)<=to
-                    && this.taskList.get(i).nextTimeAfter(from) != -1
-                    && (this.taskList.get(i).nextTimeAfter(from)-from) >= 0) {
-                System.out.println(this.taskList.get(i).getTitle());
-                absList.add(taskList.get(i));
+        for (i.next(); i.hasNext();) {
+            if (aux.isActive()
+                    && aux.nextTimeAfter(from)<=to
+                    && aux.nextTimeAfter(from) != -1
+                    && (aux.nextTimeAfter(from)-from) >= 0) {
+                System.out.println(aux.getTitle());
+                absList.add(aux);
             }
         }
 
         return (T) absList;
     }
 
+    abstract T cloneList ();
 
+    public Iterator <T> listIterator () {
+        return (Iterator <T>) taskList.iterator();
+    }
 
+    @Override
+    public String toString() {
+        return "AbstractTaskList{" +
+                "taskList=" + taskList +
+                '}';
+    }
 }

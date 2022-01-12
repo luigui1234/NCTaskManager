@@ -1,12 +1,9 @@
 package mx.edu.j2se.rocha.tasks;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 public class LinkedTaskList extends AbstractTaskList <LinkedList> {
-    private LinkedList<Task> taskList = new LinkedList<>();
+    private LinkedList<Task> taskList = (LinkedList<Task>)super.taskList;
 
     public void add (Task task) {
 
@@ -61,17 +58,55 @@ public class LinkedTaskList extends AbstractTaskList <LinkedList> {
 
         System.out.println(this.taskList);
         LinkedList<Task> linkList = new LinkedList<>();
+        Iterator i = listIterator();
 
-        for (int i = 0; i < this.taskList.size(); i++) {
-            if (this.taskList.get(i).isActive()
-                    && this.taskList.get(i).nextTimeAfter(from)<=to
-                    && this.taskList.get(i).nextTimeAfter(from) != -1
-                    && (this.taskList.get(i).nextTimeAfter(from)-from) >= 0) {
-                System.out.println(this.taskList.get(i).getTitle());
-                linkList.add(taskList.get(i));
+        for (Task aux; i.hasNext();) {
+            aux = (Task) i.next();
+            if (aux.isActive()
+                    && aux.nextTimeAfter(from)<=to
+                    && aux.nextTimeAfter(from) != -1
+                    && (aux.nextTimeAfter(from)-from) >= 0) {
+                System.out.println(aux.getTitle());
+                linkList.add(aux);
             }
         }
 
         return linkList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LinkedTaskList that = (LinkedTaskList) o;
+        int aux = 0;
+        if (taskList.size() == that.taskList.size()) {
+            for(int i = 0; i<taskList.size(); i++) {
+                if (taskList.get(i).equals(that.taskList.get(i))) {
+                    aux++;
+                }
+            }
+        }
+
+        if (aux==0) {
+            return false;
+        }
+        else return true;
+    }
+
+    LinkedList cloneList () {
+        return (LinkedList) taskList.clone();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskList);
+    }
+
+    @Override
+    public String toString() {
+        return "LinkedTaskList{" +
+                "taskList=" + taskList +
+                '}';
     }
 }
