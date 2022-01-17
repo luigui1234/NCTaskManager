@@ -5,6 +5,10 @@ import java.util.*;
 public class LinkedTaskList extends AbstractTaskList <LinkedList> {
     private LinkedList<Task> taskList = (LinkedList<Task>)super.taskList;
 
+    public LinkedTaskList() {
+        super.obj = new LinkedList<Task>();
+    }
+
     public void add (Task task) {
 
         if (task == null) {
@@ -33,7 +37,7 @@ public class LinkedTaskList extends AbstractTaskList <LinkedList> {
     }
 
     public int size () {
-        return this.taskList.size();
+        return taskList.size();
     }
 
     public Task getTask(int index) throws IndexOutOfBoundsException {
@@ -45,7 +49,7 @@ public class LinkedTaskList extends AbstractTaskList <LinkedList> {
         }
     }
 
-    public LinkedList<Task> incoming (int from, int to)
+    /*public LinkedList<Task> incoming (int from, int to)
             throws IllegalArgumentException {
         if (from < 0 || to < 0) {
             throw new IllegalArgumentException("Value must not be negative");
@@ -72,7 +76,7 @@ public class LinkedTaskList extends AbstractTaskList <LinkedList> {
         }
 
         return linkList;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

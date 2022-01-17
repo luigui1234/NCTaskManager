@@ -5,6 +5,10 @@ import java.util.*;
 public class ArrayTaskList extends AbstractTaskList <Task []> {
     private Task[] taskList = {};
 
+    public ArrayTaskList() {
+        super.obj = taskList;
+    }
+
     public void add (Task task) {
 
         if (task == null) {
@@ -57,7 +61,7 @@ public class ArrayTaskList extends AbstractTaskList <Task []> {
     }
 
 
-    public Task[] incoming (int from, int to) throws IllegalArgumentException {
+    /*public Task[] incoming (int from, int to) throws IllegalArgumentException {
         if (from < 0 || to < 0) {
             throw new IllegalArgumentException("Value must not be negative");
         }
@@ -83,7 +87,7 @@ public class ArrayTaskList extends AbstractTaskList <Task []> {
         }
 
         return arrList.toArray(subtask);
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

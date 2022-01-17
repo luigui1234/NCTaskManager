@@ -145,7 +145,7 @@ public class Tests {
 
         Assert.assertEquals(taskSchedule.getTask(0), repetitive1);
         Assert.assertEquals(taskSchedule.getTask(2), repetitive2);
-
+        System.out.println(taskSchedule.incoming(2, 18));
         Assert.assertEquals(taskSchedule.incoming(2, 18).size(), 3);
         Assert.assertEquals(taskSchedule.incoming(251, 260).size(), 0);
         Assert.assertEquals(taskSchedule.incoming(3, 18).size(), 2);
