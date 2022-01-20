@@ -41,7 +41,7 @@ public class Main {
 //
 		//incoming test
 
-		ArrayTaskList taskSchedule = new ArrayTaskList();
+		/*ArrayTaskList taskSchedule = new ArrayTaskList();
 
 		Task nonRepetitive1_5 = new Task("desayuno", 18);
 		Task repetitive1 = new Task("desayuno diario", 2, 220, 24);
@@ -70,7 +70,7 @@ public class Main {
 		taskSchedule.add(nonRepetitive4);
 		taskSchedule.add(repetitive4);
 
-		System.out.println(taskSchedule.incoming(251, 260).length);
+		System.out.println(taskSchedule.incoming(251, 260).length);*/
 	}
 	
 }

@@ -1,5 +1,6 @@
 package mx.edu.j2se.rocha.tasks;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -55,12 +56,12 @@ abstract class AbstractTaskList <T> {
         return (T) absList;
     }*/
 
-    public final T incoming (int from, int to) throws IllegalArgumentException {
-        if (from < 0 || to < 0) {
+    public final T incoming (LocalDateTime from, LocalDateTime to) throws IllegalArgumentException {
+        if (from.getYear() < 0 || to.getYear() < 0) {
             throw new IllegalArgumentException("Value must not be negative");
         }
 
-        else if (to < from) {
+        else if (to.isBefore(from)) {
             throw new IllegalArgumentException("Second parameter should end " +
                     "later than first one");
         }
@@ -84,9 +85,9 @@ abstract class AbstractTaskList <T> {
         Stream<Task> listStream = getStream();
         AbstractList absList = listStream
                 .filter(item -> item.isActive()
-                && item.nextTimeAfter(from)<=to
-                && item.nextTimeAfter(from) != -1
-                && (item.nextTimeAfter(from)-from) >= 0
+                && (item.nextTimeAfter(from).compareTo(to) <= 0)
+                && item.nextTimeAfter(from) != LocalDateTime.of(-1, 1, 1, 0, 0)
+                && (item.nextTimeAfter(from).compareTo(from)) >= 0
                 )
                 .collect(Collectors.toCollection(LinkedList::new));
         Task[] subtask = {};

@@ -98,7 +98,7 @@ public class LinkedTaskList extends AbstractTaskList <LinkedList> {
         else return true;
     }
 
-    LinkedList cloneList () {
+    public LinkedList cloneList() {
         return (LinkedList) taskList.clone();
     }
 

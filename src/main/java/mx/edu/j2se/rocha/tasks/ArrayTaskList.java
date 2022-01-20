@@ -112,7 +112,7 @@ public class ArrayTaskList extends AbstractTaskList <Task []> {
         else return true;
     }
 
-    Task[] cloneList () {
+    public Task[] cloneList () {
         return taskList;
     }
 
